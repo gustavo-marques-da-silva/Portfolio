@@ -82,6 +82,41 @@
   .fase h3{font-family:var(--display);font-size:1.4rem;font-weight:700;margin:4px 0 8px}
   .fase p{font-size:.98rem}
 
+
+  /* Tekoá */
+  #tekoa{background:var(--mangue);color:var(--nevoa);border-bottom:none}
+  #tekoa h2{color:var(--nevoa)}
+  #tekoa .intro{color:#C9D6D1}
+  #tekoa .selo{display:inline-block;font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--ipe);margin-bottom:12px}
+  .cadeia{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:48px 0 0;counter-reset:etapa}
+  .cadeia li{border-top:3px solid var(--lagoa);padding-top:14px;font-size:.95rem;color:#C9D6D1;position:relative}
+  .cadeia li:last-child{border-top-color:var(--ipe)}
+  .cadeia strong{display:block;font-family:var(--display);font-size:1.05rem;color:var(--nevoa);margin-bottom:4px}
+  .cadeia .proxy{display:block;margin-top:8px;font-family:var(--display);font-size:.85rem;color:var(--ipe)}
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:64px;padding-top:48px;border-top:1px solid #2E544C}
+  .calc h3{font-family:var(--display);font-size:1.4rem;margin-bottom:20px;color:var(--nevoa)}
+  .campo{margin-bottom:22px}
+  .campo label{display:flex;justify-content:space-between;font-family:var(--display);font-weight:600;margin-bottom:8px}
+  .campo output{color:var(--ipe)}
+  .campo input[type=range]{width:100%;accent-color:var(--ipe)}
+  .resultado .grande{font-family:var(--display);font-weight:700;font-size:clamp(3rem,7vw,5rem);line-height:1;color:var(--ipe);letter-spacing:-.03em}
+  .resultado .frase{font-size:1.1rem;margin:12px 0 24px}
+  .linhas{width:100%;border-collapse:collapse;font-size:.95rem}
+  .linhas td{padding:10px 0;border-bottom:1px solid #2E544C;color:#C9D6D1}
+  .linhas td:last-child{text-align:right;font-family:var(--display);font-weight:600;color:var(--nevoa);white-space:nowrap}
+  .linhas tr.total td{color:var(--nevoa);font-weight:600;border-bottom:none}
+  .aviso{margin-top:20px;font-size:.88rem;color:#9FB3AC}
+  .ia{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:64px;padding-top:48px;border-top:1px solid #2E544C}
+  .ia h3{font-family:var(--display);font-size:1.25rem;margin-bottom:10px;color:var(--nevoa)}
+  .ia p,.ia li{color:#C9D6D1;font-size:.98rem}
+  .ia ul{padding-left:20px}
+  .ia li{margin-bottom:6px}
+  #tekoa a:focus-visible,#tekoa input:focus-visible{outline-color:var(--ipe)}
+  @media (max-width:820px){
+    .cadeia{grid-template-columns:1fr;gap:20px}
+    .calc,.ia{grid-template-columns:1fr;gap:40px}
+  }
+
   footer{padding:64px 0 80px}
   footer h2{margin-bottom:12px}
   .contatos{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
@@ -146,10 +181,70 @@
     </div>
   </section>
 
+
+  <section id="tekoa">
+    <div class="wrap">
+      <span class="selo">Projeto em destaque</span>
+      <h2>Tekoá Impacto: quanto vale um jardim filtrante?</h2>
+      <p class="intro">A Tekoá, meu negócio de impacto, constrói jardins filtrantes que tratam água com plantas. Para vender a construtoras e prefeituras, o impacto precisa virar número. Esta ferramenta calcula o retorno social (SROI) de Soluções baseadas na Natureza.</p>
+
+      <ol class="cadeia" aria-label="Teoria da Mudança do jardim filtrante">
+        <li><strong>Recursos</strong>Investimento, plantas nativas, mão de obra local</li>
+        <li><strong>Atividades</strong>Projeto e construção do jardim filtrante</li>
+        <li><strong>Entregas</strong>Metros quadrados de jardim e litros de água tratados por dia</li>
+        <li><strong>Resultados</strong>Menos esgoto a céu aberto, mais área verde, menos doenças<span class="proxy">Proxies: custo de tratamento evitado, custo de saúde evitado, valor de área verde</span></li>
+        <li><strong>Impacto</strong>Território mais saudável e resiliente<span class="proxy">Medido em R$ de valor social por R$ investido</span></li>
+      </ol>
+
+      <div class="calc">
+        <form id="sroi" aria-label="Calculadora de SROI" onsubmit="return false">
+          <h3>Simule um projeto</h3>
+          <div class="campo"><label for="area">Área do jardim <output id="o-area"></output></label><input type="range" id="area" min="5" max="200" step="5" value="20"></div>
+          <div class="campo"><label for="pessoas">Pessoas atendidas <output id="o-pessoas"></output></label><input type="range" id="pessoas" min="5" max="500" step="5" value="40"></div>
+          <div class="campo"><label for="anos">Horizonte <output id="o-anos"></output></label><input type="range" id="anos" min="1" max="20" step="1" value="10"></div>
+          <div class="campo"><label for="invest">Investimento <output id="o-invest"></output></label><input type="range" id="invest" min="2000" max="150000" step="1000" value="15000"></div>
+        </form>
+        <div class="resultado" aria-live="polite">
+          <div class="grande" id="r-sroi"></div>
+          <p class="frase" id="r-frase"></p>
+          <table class="linhas">
+            <tr><td>Água tratada, custo evitado</td><td id="r-agua"></td></tr>
+            <tr><td>Saúde, custos evitados</td><td id="r-saude"></td></tr>
+            <tr><td>Área verde e paisagem</td><td id="r-verde"></td></tr>
+            <tr><td>Desconto de atribuição (20%)</td><td id="r-atrib"></td></tr>
+            <tr class="total"><td>Valor social no período, a valor presente</td><td id="r-total"></td></tr>
+          </table>
+          <p class="aviso">Valores ilustrativos para demonstração. As proxies (R$ 5 por m³ tratado, R$ 40 por pessoa ao ano em saúde, R$ 15 por m² de área verde ao ano, taxa de desconto de 3,5%) ainda serão validadas com fontes públicas.</p>
+        </div>
+      </div>
+
+      <div class="ia">
+        <div>
+          <h3>Onde entra a IA</h3>
+          <ul>
+            <li>Sugere proxies financeiras e as fontes públicas de cada uma.</li>
+            <li>Monta a Teoria da Mudança a partir da descrição do projeto.</li>
+            <li>Escreve o relatório de impacto alinhado aos ODS.</li>
+          </ul>
+          <p>A IA não inventa números: toda proxy vem com fonte e passa pela validação de uma pessoa.</p>
+        </div>
+        <div>
+          <h3>Por que eu</h3>
+          <ul>
+            <li>Fundador da Tekoá, com o jardim filtrante como produto e 3 parceiros.</li>
+            <li>Dois anos seguidos no Prêmio Inovação Social WASH Amanco Wavin.</li>
+            <li>TCC com pesquisa de valuation de projetos ambientais.</li>
+            <li>Formação em mensuração de impacto (Duke) e financiamento climático.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="projetos">
     <div class="wrap">
       <h2>Projetos</h2>
-      <p class="intro">Dois em construção agora e cinco propostos. Links de demo e repositório entram aqui conforme ficam prontos.</p>
+      <p class="intro">Dois em construção, um com demo e quatro propostos. Links de demo e repositório entram aqui conforme ficam prontos.</p>
 
       <div class="filtro" role="group" aria-label="Filtrar projetos por frente">
         <button type="button" data-f="todos" aria-pressed="true">Todos</button>
@@ -187,14 +282,14 @@
       </article>
 
       <article class="projeto" data-f="impacto">
-        <div class="meta"><span class="frente-tag">Impacto socioambiental</span><span class="status">Proposto</span></div>
+        <div class="meta"><span class="frente-tag">Impacto socioambiental</span><span class="status ativo">Demo disponível</span></div>
         <div>
-          <h3>Tekoá SROI</h3>
-          <p class="sub">Calculadora de impacto para Soluções baseadas na Natureza</p>
+          <h3>Tekoá Impacto</h3>
+          <p class="sub">Calculadora de valor social para Soluções baseadas na Natureza</p>
           <dl class="pares">
-            <dt>Origem</dt><dd>A Tekoá, meu negócio de impacto, constrói jardins filtrantes e defende sua tese com SROI.</dd>
-            <dt>Solução</dt><dd>A partir de área, vazão tratada e população atendida, monta a Teoria da Mudança, sugere proxies financeiras e gera o relatório de SROI alinhado aos ODS.</dd>
-            <dt>Para quem</dt><dd>Construtoras, gestores públicos e investidores de impacto.</dd>
+            <dt>Problema</dt><dd>Impacto ambiental é difícil de traduzir em linguagem de investidor e gestor público.</dd>
+            <dt>Solução</dt><dd>Calcula o SROI de jardins filtrantes e gera o relatório de impacto alinhado aos ODS.</dd>
+            <dt>Demo</dt><dd><a href="#tekoa">Simular um projeto</a></dd>
           </dl>
           <div class="tecnicas"><span>Geração estruturada</span><span>Relatórios</span></div>
         </div>
@@ -269,7 +364,7 @@
           <div class="trilho"></div>
           <p class="quando">Dezembro a janeiro</p>
           <h3>Provar impacto</h3>
-          <p>Tekoá SROI e Radar de Editais em uso real na Tekoá e na Enactus.</p>
+          <p>Tekoá Impacto e Radar de Editais em uso real na Tekoá e na Enactus.</p>
         </div>
         <div class="fase">
           <div class="trilho"></div>
@@ -300,6 +395,23 @@
     botoes.forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
     projetos.forEach(p => { p.hidden = !(b.dataset.f === 'todos' || p.dataset.f === b.dataset.f); });
   }));
+
+  const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  const el = id => document.getElementById(id);
+  function calcular(){
+    const area=+el('area').value, pessoas=+el('pessoas').value, anos=+el('anos').value, inv=+el('invest').value;
+    el('o-area').textContent=area+' m²'; el('o-pessoas').textContent=pessoas;
+    el('o-anos').textContent=anos+(anos>1?' anos':' ano'); el('o-invest').textContent=brl(inv);
+    const taxa=0.035; let fator=0; for(let t=1;t<=anos;t++) fator+=1/Math.pow(1+taxa,t);
+    const agua=pessoas*0.1*365*5*fator, saude=pessoas*40*fator, verde=area*15*fator;
+    const bruto=agua+saude+verde, atrib=bruto*0.2, total=bruto-atrib, sroi=total/inv;
+    el('r-agua').textContent=brl(agua); el('r-saude').textContent=brl(saude); el('r-verde').textContent=brl(verde);
+    el('r-atrib').textContent='− '+brl(atrib); el('r-total').textContent=brl(total);
+    el('r-sroi').textContent=sroi.toLocaleString('pt-BR',{maximumFractionDigits:1})+' : 1';
+    el('r-frase').textContent='Cada R$ 1 investido gera cerca de R$ '+sroi.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' em valor social.';
+  }
+  ['area','pessoas','anos','invest'].forEach(id=>el(id).addEventListener('input',calcular));
+  calcular();
 </script>
 </body>
 </html>
